@@ -9,8 +9,10 @@ import json
 
 app = Flask(__name__)
 
-client = MongoClient()
-db = client.myretail
+client = MongoClient(
+    os.environ['DB_PORT_27017_TCP_ADDR'],
+    27017)
+db = client.sarabi
 
 
 @app.route("/products/<int:product_id>", methods=['GET', 'PUT'])
