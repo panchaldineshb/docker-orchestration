@@ -23,6 +23,8 @@ def get_product(product_id):
 
     try:
 
+        print('get_product {0}'.format(product_id))
+
         if request.method == "GET":
             products_obj = db.product.find({"product_id": product_id})
             if products_obj.count() == 0:
@@ -48,8 +50,26 @@ def get_product(product_id):
             if status != 200:
                 return jsonify(error=status, text=product_doc), status   # for given Product ID, name not found in redsky
 
-            return Response(dumps(product_doc), mimetype='application/json')
+            return Response(dumps(product_doc), mimetype='application/json'), 200
 
+
+    except Exception as error:
+        return jsonify(error=502, text="Unknown Error {0}".format(error)), 502
+
+
+@app.route("/create/<int:product_id>", methods=['GET'])
+def create(product_id):
+    """
+    Function for Products
+    """
+
+    try:
+
+        print('create {0}'.format(product_id))
+
+        status, product_doc = create_test_data(product_id)
+
+        return Response(dumps(product_doc), mimetype='application/json'), 200
 
     except Exception as error:
         return jsonify(error=502, text="Unknown Error {0}".format(error)), 502
@@ -59,7 +79,7 @@ def get_name_from_redsky(product_id):
 
     try:
 
-        url = "https://redsky.target.com/v2/pdp/tcin/{0}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics".format(product_id)
+        url = "https://redsky.target.com/v2/pdp/tcin/{0}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_product,rating_and_review_statistics,question_answer_statistics".format(product_id)
         http = urllib3.PoolManager()
         response = http.request('GET', url)
         if 200 == response.status:                     # checks Get successness with redskys
@@ -108,6 +128,34 @@ def update_price(request):
         return 200, product_doc
 
     except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return 500, "Internal Server Error"
+
+
+
+def create_test_data(product_id):
+
+    try:
+
+        product_doc = {                                   # Creating Json dynamically / aggregating it for response
+            'product_id': product_id,
+            'current_price': {
+                'currency_code': 'USD',
+                'value': 45.78
+            }
+        }
+
+        result = db.product.insert_one(product_doc)
+
+        print('Created {0}'.format(result.inserted_id))
+
+        print('finished creating 100 business product')
+        
+        return 200, product_doc
+        
+    except Exception as ex:                        # handle unknow expections from redsky
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)

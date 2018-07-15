@@ -66,7 +66,7 @@ eval "$(docker-machine env dev)"
 docker-compose build --force-rm
 docker volume rm $(docker volume ls -qf dangling=true)
 docker-compose down --timeout 0
-docker-compose up -d
+docker-compose up
 ```
 
 ```
