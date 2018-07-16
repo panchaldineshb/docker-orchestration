@@ -35,6 +35,7 @@ def get_product(product_id):
         if request.method == "GET":
             products_obj = db.product.find({"product_id": product_id})
             log.info(products_obj)
+            log.info(products_obj.count())
             if products_obj.count() == 0:
                 return jsonify(error=404, text="Not Found"), 404  # Product_id not found in MongoDB
 
