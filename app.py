@@ -3,6 +3,7 @@ from flask import Flask, redirect, url_for, request, Response, jsonify, render_t
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+import logging as log
 import urllib3
 import json
 
@@ -14,6 +15,12 @@ client = MongoClient(
     27017)
 db = client.sarabi
 
+log.basicConfig(format="%(levelname)s: %(message)s", level=log.DEBUG)
+log.info("Verbose output.")
+
+log.info("This should be verbose.")
+log.warning("This is a warning.")
+log.error("This is an error.")
 
 @app.route("/products/<int:product_id>", methods=['GET', 'PUT'])
 def get_product(product_id):
@@ -23,14 +30,16 @@ def get_product(product_id):
 
     try:
 
-        print('get_product {0}'.format(product_id))
+        log.info("get_product {0}".format(product_id))
 
         if request.method == "GET":
             products_obj = db.product.find({"product_id": product_id})
+            log.info(products_obj)
             if products_obj.count() == 0:
                 return jsonify(error=404, text="Not Found"), 404  # Product_id not found in MongoDB
 
             status, name = get_name_from_redsky(product_id=product_id)
+            log.info("status {0} name {1}".format(status, name))
             if status != 200:
                 return jsonify(error=status, text=name), status   # for given Product ID, name not found in redsky
 
@@ -42,6 +51,7 @@ def get_product(product_id):
                     'value': products_obj[0]['current_price']['value']
                 }
             }
+            log.info(product_doc)
 
             return jsonify(product_doc)
 
