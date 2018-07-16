@@ -1,8 +1,8 @@
 import os
 from flask import Flask, redirect, url_for, request, Response, jsonify, render_template
-from pymongo import MongoClient
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from pymongo import MongoClient
 import urllib3
 import json
 
@@ -152,9 +152,9 @@ def create_test_data(product_id):
         print('Created {0}'.format(result.inserted_id))
 
         print('finished creating 100 business product')
-        
+
         return 200, product_doc
-        
+
     except Exception as ex:                        # handle unknow expections from redsky
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
