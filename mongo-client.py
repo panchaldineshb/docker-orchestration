@@ -8,7 +8,7 @@ log.info("This should be verbose.")
 log.warning("This is a warning.")
 log.error("This is an error.")
 
-client = MongoClient(host=myhostname, port=27017)
+client = MongoClient(host="myhostname", port=27017)
 log.info("Connection Successful")
 log.info(client.database_names())
 client.close()
