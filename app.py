@@ -10,7 +10,8 @@ import json
 
 app = Flask(__name__)
 
-client = MongoClient()
+client = MongoClient("mongodb://127.0.0.1:27017")
+log.info("Connection Successful")
 db = client.sarabi
 
 log.basicConfig(format="%(levelname)s: %(message)s", level=log.DEBUG)
