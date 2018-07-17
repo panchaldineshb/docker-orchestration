@@ -9,6 +9,7 @@ log.warning("This is a warning.")
 log.error("This is an error.")
 
 client = MongoClient(port=27017)
+log.info(client)
 log.info("Connection Successful")
 log.info(client.database_names())
 client.close()
