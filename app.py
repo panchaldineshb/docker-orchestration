@@ -64,6 +64,7 @@ def get_product(product_id):
 
 
     except Exception as error:
+        log.error(error)
         return jsonify(error=502, text="Unknown Error {0}".format(error)), 502
 
 
@@ -75,13 +76,14 @@ def create(product_id):
 
     try:
 
-        print('create {0}'.format(product_id))
+        log.info("create {0}".format(product_id))
 
         status, product_doc = create_test_data(product_id)
 
         return Response(dumps(product_doc), mimetype='application/json'), 200
 
     except Exception as error:
+        log.error(error)
         return jsonify(error=502, text="Unknown Error {0}".format(error)), 502
 
 
@@ -101,6 +103,7 @@ def get_name_from_redsky(product_id):
             return response.status, response.reason   # if redsky didn't provide no response then print status & reason
 
     except Exception as ex:                        # handle unknow expections from redsky
+        log.error(ex)
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
@@ -138,6 +141,7 @@ def update_price(request):
         return 200, product_doc
 
     except Exception as ex:
+        log.error(ex)
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
@@ -166,6 +170,7 @@ def create_test_data(product_id):
         return 200, product_doc
 
     except Exception as ex:                        # handle unknow expections from redsky
+        log.error(ex)
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
