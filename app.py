@@ -18,10 +18,13 @@ log.warning("This is a warning.")
 log.error("This is an error.")
 
 
-client = MongoClient("mongodb://127.0.0.1:27017")
-log.info("Connection Successful")
+uri = 'mongodb://myhostname:27017/local'
+client = MongoClient(uri)
 log.info(client)
-db = client.sarabi
+log.info("Connection Successful")
+db = client.get_default_database()
+log.info(db)
+db = client.get_database()
 log.info(db)
 
 
