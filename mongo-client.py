@@ -8,11 +8,7 @@ log.info("This should be verbose.")
 log.warning("This is a warning.")
 log.error("This is an error.")
 
-client = MongoClient("mongodb://127.0.0.1:27017")
+client = MongoClient(port=27017)
 log.info("Connection Successful")
-
-d = dict((db, [collection for collection in client[db].collection_names()])
-         for db in client.database_names())
-log.info(json.dumps(d))
-
+log.info(client.database_names())
 client.close()
