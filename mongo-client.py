@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import logging as log
 import json
 
 log.basicConfig(format="[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s", level=log.DEBUG)
