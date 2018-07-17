@@ -12,19 +12,16 @@ app = Flask(__name__)
 
 
 log.basicConfig(format="[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s", level=log.DEBUG)
-log.info("Verbose output.")
 log.info("This should be verbose.")
 log.warning("This is a warning.")
 log.error("This is an error.")
 
 
-uri = 'mongodb://myhostname:27017/local'
+uri = 'mongodb://myhostname:27017'
 client = MongoClient(uri)
 log.info(client)
 log.info("Connection Successful")
-db = client.get_default_database()
-log.info(db)
-db = client.get_database()
+db = client.sarabi
 log.info(db)
 
 
