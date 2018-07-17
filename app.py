@@ -17,7 +17,7 @@ log.warning("This is a warning.")
 log.error("This is an error.")
 
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://sarabi:27017/')
 log.info(client)
 log.info("Connection Successful")
 db = client.sarabi
