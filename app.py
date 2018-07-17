@@ -160,12 +160,14 @@ def create_test_data(product_id):
                 'value': 45.78
             }
         }
+        log.info(product_doc)
 
         result = db.product.insert_one(product_doc)
+        log.info(result)
 
-        print('Created {0}'.format(result.inserted_id))
+        log.info("Created {0}".format(result.inserted_id))
 
-        print('finished creating 100 business product')
+        log.info("finished creating 100 business product"')
 
         return 200, product_doc
 
