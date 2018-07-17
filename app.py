@@ -167,7 +167,7 @@ def create_test_data(product_id):
 
         log.info("Created {0}".format(result.inserted_id))
 
-        log.info("finished creating 100 business product"')
+        log.info("finished creating 100 business product")
 
         return 200, product_doc
 
