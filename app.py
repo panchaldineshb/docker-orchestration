@@ -17,7 +17,7 @@ log.warning("This is a warning.")
 log.error("This is an error.")
 
 
-uri = 'mongodb://myhostname:27017'
+uri = 'mongodb://0.0.0.0:27017'
 client = MongoClient(uri)
 log.info(client)
 log.info("Connection Successful")
@@ -83,6 +83,8 @@ def create(product_id):
         log.info("create {0}".format(product_id))
 
         status, product_doc = create_test_data(product_id)
+        if status != 200:
+            return jsonify(error=status, text=product_doc), status   # for given Product ID, name not found in redsky
 
         return Response(dumps(product_doc), mimetype='application/json'), 200
 
