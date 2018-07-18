@@ -17,10 +17,12 @@ log.warning("This is a warning.")
 log.error("This is an error.")
 
 
-client = MongoClient('mongodb://0.0.0.0:27017')
+client = MongoClient(
+    os.environ['DB_PORT_27017_TCP_ADDR'],
+    27017)
 log.info(client)
 log.info("Connection Successful")
-db = client.local
+db = client.sarabi
 log.info(db)
 
 
