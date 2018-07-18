@@ -16,8 +16,7 @@ log.info("This should be verbose.")
 log.warning("This is a warning.")
 log.error("This is an error.")
 
-
-client = MongoClient()
+client = MongoClient("mongodb://192.168.99.100:27017")
 log.info(client)
 log.info("Connection Successful")
 db = client.sarabi
