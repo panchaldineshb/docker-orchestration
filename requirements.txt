@@ -1,4 +1,4 @@
 flask
 pymongo
 requests
-urllib3==1.23
+urllib3==1.26.5
